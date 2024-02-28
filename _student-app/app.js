@@ -31,3 +31,26 @@ app.get("/", (req, res) => {
 app.get("/new-entry", (req, res) => {
     res.render("new-entry")
 })
+
+// if url is host:port/new-entry
+app.post("/new-entry", (req, res) => {
+    // if request body has no title or body tag, respond with status
+    if(!req.body.title || !req.body.body) {
+        //respond 400 bad request and send a plain test message
+        res.status(400).send("Entries must have a title and an information body. Please provide that!")
+        //exit handler
+        return
+    }
+    // push new entry to that entries array 
+    entries.push({
+        title: req.body.title,
+        body: req.body.body,
+        publish: new Date()
+    })
+    res.redirect("/")
+})
+
+app.use((req, res) => {
+    //return 404
+    res.status(400).render("404")
+})
