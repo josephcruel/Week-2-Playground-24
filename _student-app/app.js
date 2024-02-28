@@ -23,10 +23,16 @@ app.set("view engine", "ejs")
 app.use(bodyParser.urlencoded({extended: false}))
 
 // Renders the index.ejs file.
-app.get("/", (req, res) => {
-    res.render("index")
+app.get("/", (req, res, next) => {
+    if(req.url === "/") {
+        res.render("index")
+    } else if (req.url === "/throw") {
+        throw new Error("Wrong path!")
+    } else {
+        next("You didn't visit the right homepage!")
+    }
 })
-
+    
 //if my url is /new-entry
 app.get("/new-entry", (req, res) => {
     res.render("new-entry")
