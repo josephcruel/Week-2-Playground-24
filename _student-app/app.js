@@ -54,3 +54,8 @@ app.use((req, res) => {
     //return 404
     res.status(400).render("404")
 })
+
+// Create a server on port 3000 
+http.createServer(app).listen(3000, () => {
+    console.log("running on port 3000")
+})
